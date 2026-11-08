@@ -5,8 +5,8 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useRef,
-  useState,
+  useMemo,
+  useSyncExternalStore,
 } from "react";
 
 type RouterContextValue = {
@@ -27,6 +27,11 @@ function getHashPath(): string {
   return raw.length > 0 ? raw : "/";
 }
 
+function subscribe(onChange: () => void) {
+  window.addEventListener("hashchange", onChange);
+  return () => window.removeEventListener("hashchange", onChange);
+}
+
 function scrollToSection(sectionId: string) {
   const el = document.getElementById(sectionId);
   if (el) {
@@ -35,23 +40,15 @@ function scrollToSection(sectionId: string) {
 }
 
 export function RouterProvider({ children }: { children: React.ReactNode }) {
-  const [path, setPath] = useState("/");
-  const mounted = useRef(false);
+  const path = useSyncExternalStore(subscribe, getHashPath, () => "/");
 
+  // Scroll to top after every route change (external DOM side effect).
   useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      setPath(getHashPath());
-    }
-    const onHashChange = () => {
-      setPath(getHashPath());
-      window.setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: "auto" });
-      }, 60);
-    };
-    window.addEventListener("hashchange", onHashChange);
-    return () => window.removeEventListener("hashchange", onHashChange);
-  }, []);
+    const t = window.setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }, 60);
+    return () => window.clearTimeout(t);
+  }, [path]);
 
   const navigate = useCallback((to: string, sectionId?: string) => {
     const current = getHashPath();
@@ -64,18 +61,15 @@ export function RouterProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     window.location.hash = to;
-    setPath(to);
     if (sectionId) {
       window.setTimeout(() => scrollToSection(sectionId), 450);
-    } else {
-      window.setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: "auto" });
-      }, 60);
     }
   }, []);
 
+  const value = useMemo(() => ({ path, navigate }), [path, navigate]);
+
   return (
-    <RouterContext.Provider value={{ path, navigate }}>
+    <RouterContext.Provider value={value}>
       {children}
     </RouterContext.Provider>
   );

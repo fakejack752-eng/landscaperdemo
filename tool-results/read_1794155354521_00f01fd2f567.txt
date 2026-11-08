@@ -1,0 +1,905 @@
+     1→import type { IconName } from "@/lib/icons";
+     2→
+     3→/**
+     4→ * ─────────────────────────────────────────────────────────────────────────────
+     5→ * EVERGREEN LANDSCAPE & OUTDOOR LIVING — DEMO WEBSITE CONTENT & CONFIG
+     6→ * ─────────────────────────────────────────────────────────────────────────────
+     7→ * This is the single editable content file for the demo website.
+     8→ * Change values here to customize the entire site (see README.md).
+     9→ *
+    10→ * Everything shown on the website is sample/demo content for a fictional
+    11→ * business. No real licenses, reviews, ratings, addresses, or phone numbers
+    12→ * are used. Replace placeholders with verified client data before launch.
+    13→ */
+    14→
+    15→export const siteConfig = {
+    16→  /* ── DEMO DISCLOSURE ─────────────────────────────────────────────────── */
+    17→  demo: {
+    18→    badge: "Demo Website Concept",
+    19→    formNotice:
+    20→      "This form is part of a demonstration website. Your information is not sent, stored, or shared.",
+    21→    submissionMessage:
+    22→      "Demo request received. This is a sample website, so your information was not sent.",
+    23→    disclosure:
+    24→      "Demo Website Concept. Created to demonstrate website design and customer inquiry features.",
+    25→    credit: "Website concept by AI Automation NY",
+    26→    creditUrl: "https://aiautomationny.com",
+    27→  },
+    28→
+    29→  /* ── BUSINESS (all placeholders) ─────────────────────────────────────── */
+    30→  business: {
+    31→    name: "Evergreen Landscape & Outdoor Living",
+    32→    shortName: "Evergreen",
+    33→    tagline: "Beautiful Outdoor Spaces. Built to Be Enjoyed.",
+    34→    phoneDisplay: "(555) 013-9200", // Placeholder number — replace with the real number
+    35→    phoneHref: "tel:+15550139200",
+    36→    email: "hello@evergreen-demo.example", // Placeholder address
+    37→    website: "www.evergreen-demo.example",
+    38→    address: "123 Sample Avenue, Suite 200 — placeholder address", // Placeholder
+    39→    serviceAreaLine: "Serving Queens, Brooklyn & Nassau County",
+    40→    hours: [
+    41→      { days: "Monday – Friday", time: "8:00 AM – 5:00 PM" },
+    42→      { days: "Saturday", time: "By appointment" },
+    43→      { days: "Sunday", time: "Closed" },
+    44→    ],
+    45→  },
+    46→
+    47→  /* ── CONTACT & INTEGRATIONS (left empty until a real destination exists) ── */
+    48→  integrations: {
+    49→    /** Set to a real endpoint (CRM webhook, form handler, email service) to enable submissions.
+    50→     *  While empty, the estimate form is a pure front-end demo and sends nothing. */
+    51→    estimateFormEndpoint: "",
+    52→    /** Set to a scheduling tool URL (Calendly, GoHighLevel calendar, etc.) to enable booking. */
+    53→    bookingUrl: "",
+    54→    /** Social links — add real URLs or leave empty to hide the row. */
+    55→    socialLinks: [] as { label: string; url: string }[],
+    56→  },
+    57→
+    58→  /* ── KEY SITE IMAGES ─────────────────────────────────────────────────── */
+    59→  images: {
+    60→    hero: {
+    61→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/62cd9a05b1a8.jpg",
+    62→      alt: "Modern backyard at dusk with a stone paver patio, landscape lighting, planted garden beds, and warm glowing windows",
+    63→    },
+    64→    introMain: {
+    65→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/ecf7364469e1.png",
+    66→      alt: "Residential front yard with a manicured lawn, stone walkway, and layered flower beds with mulch",
+    67→    },
+    68→    introDetail: {
+    69→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/2cd2180b3346.jpg",
+    70→      alt: "Formal garden with a stone fountain, clipped hedges, and a gravel path in morning light",
+    71→    },
+    72→    cta: {
+    73→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/97c4a90223c4.jpg",
+    74→      alt: "Backyard paver patio with a stone fire pit, Adirondack chairs, and a warmly lit house at dusk",
+    75→    },
+    76→    about: {
+    77→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/6016984d529a.jpg",
+    78→      alt: "Landscaper trimming perennials beside a stone retaining wall on a residential street",
+    79→    },
+    80→  },
+    81→
+    82→  /* ── NAVIGATION ──────────────────────────────────────────────────────── */
+    83→  nav: [
+    84→    { label: "Home", path: "/" },
+    85→    { label: "Project Inspiration", path: "/gallery" },
+    86→    { label: "About", path: "/about" },
+    87→    { label: "Service Areas", path: "/areas" },
+    88→    { label: "Contact", path: "/contact" },
+    89→  ],
+    90→
+    91→  /* ── SERVICES (10) ───────────────────────────────────────────────────── */
+    92→  services: [
+    93→    {
+    94→      slug: "landscape-design-installation",
+    95→      icon: "PencilRuler" as IconName,
+    96→      title: "Landscape Design & Installation",
+    97→      short:
+    98→        "Complete outdoor transformations — from the first sketch to the final planting.",
+    99→      cardImage:
+   100→        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/2923e95a381a.png",
+   101→      cardAlt:
+   102→        "Backyard with a covered dining pavilion, stone steps, water feature, and layered landscape lighting at dusk (design inspiration)",
+   103→      intro:
+   104→        "A thoughtful plan turns a yard into a place you actually want to spend time in. This service covers the full journey — listening to how you live, designing around your space, and installing plantings, beds, and features with care.",
+   105→      types: [
+   106→        "Full-property landscape plans",
+   107→        "Front yard and curb-appeal renovations",
+   108→        "Backyard transformations and outdoor rooms",
+   109→        "Sod installation and lawn renovation",
+   110→        "Retaining walls and garden structures",
+   111→      ],
+   112→      benefits: [
+   113→        {
+   114→          title: "A plan before a shovel",
+   115→          text: "Every project starts with a design conversation, so the result matches how you live outdoors.",
+   116→        },
+   117→        {
+   118→          title: "Plantings suited to New York",
+   119→          text: "Species and styles selected for Long Island and NYC climates and seasons.",
+   120→        },
+   121→        {
+   122→          title: "One team, start to finish",
+   123→          text: "Design, site preparation, and installation handled as a single, coordinated project.",
+   124→        },
+   125→      ],
+   126→      faqs: [
+   127→        {
+   128→          q: "How does the design process work?",
+   129→          a: "In this example flow, it starts with a consultation and property walk, followed by a concept plan and a clear project scope before any installation begins.",
+   130→        },
+   131→        {
+   132→          q: "Can work be done in phases?",
+   133→          a: "Yes — sample projects can be split into phases so improvements roll out over time and budget.",
+   134→        },
+   135→      ],
+   136→      galleryCategory: "Gardens",
+   137→    },
+   138→    {
+   139→      slug: "lawn-care-maintenance",
+   140→      icon: "Grass" as IconName,
+   141→      title: "Lawn Care & Maintenance",
+   142→      short:
+   143→        "Scheduled mowing, edging, and seasonal care that keeps lawns healthy and neat.",
+   144→      cardImage:
+   145→        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/15ab73c3f13b.jpg",
+   146→      cardAlt:
+   147→        "Landscaping crew member pushing a commercial mower across a green lawn beside a commercial building",
+   148→      intro:
+   149→        "A consistent, well-planned maintenance schedule is what keeps a lawn looking intentional instead of just tended. Visits can include mowing, edging, trimming, and seasonal health checks.",
+   150→      types: [
+   151→        "Weekly and biweekly mowing programs",
+   152→        "Edging, trimming, and blowing",
+   153→        "Fertilization and weed-control schedules (example offering)",
+   154→        "Aeration and overseeding",
+   155→        "Spring and fall lawn preparation",
+   156→      ],
+   157→      benefits: [
+   158→        {
+   159→          title: "A predictable schedule",
+   160→          text: "Recurring visits on a set day, with notifications so you always know what to expect.",
+   161→        },
+   162→        {
+   163→          title: "Healthy, not just tidy",
+   164→          text: "Care plans consider soil, season, and grass type — not just cutting height.",
+   165→        },
+   166→        {
+   167→          title: "Tidy every visit",
+   168→          text: "Walkways and driveways blown clean after every service, every time.",
+   169→        },
+   170→      ],
+   171→      faqs: [
+   172→        {
+   173→          q: "How often should a lawn be mowed?",
+   174→          a: "In this sample program, most lawns are visited weekly during the growing season, with biweekly options for slower-growing properties.",
+   175→        },
+   176→        {
+   177→          q: "Do I need to be home for service?",
+   178→          a: "As an example, no — recurring visits can be completed while you're away, with a summary sent after each visit.",
+   179→        },
+   180→      ],
+   181→      galleryCategory: "Backyards",
+   182→    },
+   183→    {
+   184→      slug: "seasonal-cleanups",
+   185→      icon: "Leaf" as IconName,
+   186→      title: "Seasonal Cleanups",
+   187→      short:
+   188→        "Spring resets, fall leaf removal, and everything needed to hand your yard to the next season.",
+   189→      cardImage:
+   190→        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/80f36dd6e913.jpg",
+   191→      cardAlt:
+   192→        "Person raking golden autumn leaves into a pile on a sunlit lawn",
+   193→      intro:
+   194→        "Transitions are when properties need the most attention. Spring cleanups wake beds up; fall cleanups put them to bed properly. Both protect the investment you've already made.",
+   195→      types: [
+   196→        "Spring cleanups and bed preparation",
+   197→        "Fall leaf cleanup and removal",
+   198→        "Mulch refresh and bed edging",
+   199→        "Perennial cutbacks and pruning",
+   200→        "Gutter-adjacent and hardscape debris clearing",
+   201→      ],
+   202→      benefits: [
+   203→        {
+   204→          title: "Season-ready beds",
+   205→          text: "Beds start each season clean, edged, and ready to grow.",
+   206→        },
+   207→        {
+   208→          title: "One-time or bundled",
+   209→          text: "Book a single cleanup or bundle spring and fall together for the year.",
+   210→        },
+   211→        {
+   212→          title: "Debris gone, not piled",
+   213→          text: "Leaves and clippings are removed and hauled — nothing left behind.",
+   214→        },
+   215→      ],
+   216→      faqs: [
+   217→        {
+   218→          q: "When should a spring cleanup happen?",
+   219→          a: "As an example, once the ground has thawed and before perennials actively grow — usually late March through April in the New York area.",
+   220→        },
+   221→        {
+   222→          q: "Do you remove the leaves or just mulch them?",
+   223→          a: "Both options exist in this sample offering — full removal and haul-away, or on-site mulching where appropriate.",
+   224→        },
+   225→      ],
+   226→      galleryCategory: "Gardens",
+   227→    },
+   228→    {
+   229→      slug: "patios-pavers-walkways",
+   230→      icon: "BrickWall" as IconName,
+   231→      title: "Patios, Pavers & Walkways",
+   232→      short:
+   233→        "Stone patios, walkways, and hardscaping built for everyday enjoyment.",
+   234→      cardImage:
+   235→        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/99127fcef9a9.jpg",
+   236→      cardAlt:
+   237→        "Modern backyard patio with a black pergola, outdoor dining table, and patterned pavers beside a green lawn (design inspiration)",
+   238→      intro:
+   239→        "Hardscape is the backbone of an outdoor living space. Patios, paths, and steps define how a property is used — and how it feels the moment you step outside.",
+   240→      types: [
+   241→        "Patio design and installation",
+   242→        "Front walkways and garden paths",
+   243→        "Bluestone, paver, and natural stone options",
+   244→        "Steps, landings, and level changes",
+   245→        "Fire pit areas and seating walls (example features)",
+   246→      ],
+   247→      benefits: [
+   248→        {
+   249→          title: "Built for the climate",
+   250→          text: "Base preparation and drainage designed for freeze-thaw cycles in New York.",
+   251→        },
+   252→        {
+   253→          title: "Material guidance",
+   254→          text: "Clear comparisons between paver, bluestone, and natural stone options.",
+   255→        },
+   256→        {
+   257→          title: "Details that last",
+   258→          text: "Edging, jointing, and grading handled as carefully as the surface itself.",
+   259→        },
+   260→      ],
+   261→      faqs: [
+   262→        {
+   263→          q: "How long does a patio project take?",
+   264→          a: "In this sample timeline, a typical residential patio is completed within one to two weeks of starting, depending on size and materials.",
+   265→        },
+   266→        {
+   267→          q: "Which material should I choose?",
+   268→          a: "The consultation walks through paver, bluestone, and natural stone options with sample imagery and honest trade-offs.",
+   269→        },
+   270→      ],
+   271→      galleryCategory: "Patios",
+   272→    },
+   273→    {
+   274→      slug: "garden-design-planting",
+   275→      icon: "Flower2" as IconName,
+   276→      title: "Garden Design & Planting",
+   277→      short:
+   278→        "Perennial beds, seasonal color, and plantings suited to New York seasons.",
+   279→      cardImage:
+   280→        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/026aec6036a5.jpg",
+   281→      cardAlt:
+   282→        "Cottage-style garden with a brick path, flowering perennials, and planters beside a shed (design inspiration)",
+   283→      intro:
+   284→        "Gardens should look good in every season, not just for one week in May. Planting plans layer perennials, shrubs, and seasonal color so something is always happening.",
+   285→      types: [
+   286→        "Perennial garden design and planting",
+   287→        "Pollinator and native plant gardens (example styles)",
+   288→        "Seasonal containers and planters",
+   289→        "Foundation plantings and bed redesigns",
+   290→        "Window box and entry displays",
+   291→      ],
+   292→      benefits: [
+   293→        {
+   294→          title: "Four-season thinking",
+   295→          text: "Plant palettes chosen for spring bloom, summer fullness, fall color, and winter structure.",
+   296→        },
+   297→        {
+   298→          title: "Right plant, right place",
+   299→          text: "Sun, soil, and moisture matched to each plant so gardens thrive with less intervention.",
+   300→        },
+   301→        {
+   302→          title: "Color you can live with",
+   303→          text: "Designs balance seasonal color with a calm, cohesive overall look.",
+   304→        },
+   305→      ],
+   306→      faqs: [
+   307→        {
+   308→          q: "When is the best time to plant?",
+   309→          a: "In this example, spring and early fall are ideal windows in the New York area, though container plantings go in whenever conditions allow.",
+   310→        },
+   311→        {
+   312→          q: "Can you refresh an existing garden instead of starting over?",
+   313→          a: "Yes — sample services include editing and enhancing established beds rather than replacing everything.",
+   314→        },
+   315→      ],
+   316→      galleryCategory: "Gardens",
+   317→    },
+   318→    {
+   319→      slug: "tree-shrub-care",
+   320→      icon: "TreePine" as IconName,
+   321→      title: "Tree & Shrub Care",
+   322→      short:
+   323→        "Pruning, shaping, and seasonal health care for the plants that frame your property.",
+   324→      cardImage:
+   325→        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/61a35bf0202a.jpg",
+   326→      cardAlt:
+   327→        "Close-up of professional loppers pruning a tree branch against a blue sky",
+   328→      intro:
+   329→        "Trees and shrubs are the structure of a landscape. Regular pruning keeps them healthy, shapely, and safe — and protects the rest of the garden around them.",
+   330→      types: [
+   331→        "Ornamental tree and shrub pruning",
+   332→        "Hedge shaping and height control",
+   333→        "Deadwood and storm-damage cleanup",
+   334→        "Shrub rejuvenation pruning",
+   335→        "Seasonal health inspections (example offering)",
+   336→      ],
+   337→      benefits: [
+   338→        {
+   339→          title: "Pruned with intent",
+   340→          text: "Cuts made for plant health and shape — never one-size-fits-all shearing.",
+   341→        },
+   342→        {
+   343→          title: "Timing matters",
+   344→          text: "Work scheduled around bloom cycles so spring flowering shrubs are never sacrificed.",
+   345→        },
+   346→        {
+   347→          title: "Safety-first cleanups",
+   348→          text: "Storm damage and hazard branches addressed promptly and cleaned up completely.",
+   349→        },
+   350→      ],
+   351→      faqs: [
+   352→        {
+   353→          q: "When should shrubs be pruned?",
+   354→          a: "As an example, timing depends on the species — spring bloomers right after flowering, and most other shrubs in late winter or early spring.",
+   355→        },
+   356→        {
+   357→          q: "Do you handle large tree removal?",
+   358→          a: "In this sample scope, work focuses on pruning and care; large removals would be coordinated with specialist partners.",
+   359→        },
+   360→      ],
+   361→      galleryCategory: "Gardens",
+   362→    },
+   363→    {
+   364→      slug: "irrigation-sprinkler-systems",
+   365→      icon: "Droplets" as IconName,
+   366→      title: "Irrigation & Sprinkler Systems",
+   367→      short:
+   368→        "Efficient watering systems, repairs, and seasonal start-ups and shut-downs.",
+   369→      cardImage:
+   370→        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/759f8a54366c.jpg",
+   371→      cardAlt:
+   372→        "Lawn sprinkler head spraying water over a bright green lawn",
+   373→      intro:
+   374→        "Consistent, efficient watering is what keeps new plantings and lawns established. Systems are tuned to the property so water goes where it's needed — and nowhere it isn't.",
+   375→      types: [
+   376→        "New sprinkler system installation (example offering)",
+   377→        "System repairs and head adjustments",
+   378→        "Spring start-up and fall winterization",
+   379→        "Smart controller and timer setup",
+   380→        "Drip irrigation for beds and planters",
+   381→      ],
+   382→      benefits: [
+   383→        {
+   384→          title: "Water where it counts",
+   385→          text: "Zones and head placement matched to sun, shade, and plant type.",
+   386→        },
+   387→        {
+   388→          title: "Seasonal servicing",
+   389→          text: "Start-up in spring, blow-out before winter — protecting pipes and heads.",
+   390→        },
+   391→        {
+   392→          title: "Less waste",
+   393→          text: "Smart scheduling reduces overwatering and keeps bills predictable.",
+   394→        },
+   395→      ],
+   396→      faqs: [
+   397→        {
+   398→          q: "When should systems be winterized?",
+   399→          a: "In this sample schedule, before the first hard freeze — typically late October or November in the New York area.",
+   400→        },
+   401→        {
+   402→          q: "Can an older system be updated?",
+   403→          a: "Yes — example services include retrofitting existing systems with modern, water-saving controllers.",
+   404→        },
+   405→      ],
+   406→      galleryCategory: "Backyards",
+   407→    },
+   408→    {
+   409→      slug: "landscape-lighting",
+   410→      icon: "Lightbulb" as IconName,
+   411→      title: "Landscape Lighting",
+   412→      short:
+   413→        "Path lights, uplighting, and ambient glow that extends your evenings.",
+   414→      cardImage:
+   415→        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/c5fe3029701e.jpg",
+   416→      cardAlt:
+   417→        "Front yard of a home at dusk with illuminated garden beds and low-voltage step lighting along the walkway",
+   418→      intro:
+   419→        "Lighting changes how a property feels after sunset — safer walkways, warmer gatherings, and a home that still has presence in the dark.",
+   420→      types: [
+   421→        "Path and walkway lighting",
+   422→        "Uplighting for trees and architecture",
+   423→        "Patio and deck ambient lighting",
+   424→        "Step and entry safety lighting",
+   425→        "Timer and smart-control setup",
+   426→      ],
+   427→      benefits: [
+   428→        {
+   429→          title: "Warm, not glaring",
+   430→          text: "Fixture selection and placement favor a soft, layered look over harsh brightness.",
+   431→        },
+   432→        {
+   433→          title: "Built to stay put",
+   434→          text: "Low-voltage systems installed to handle weather, mowers, and seasons.",
+   435→        },
+   436→        {
+   437→          title: "Evenings, extended",
+   438→          text: "Outdoor spaces that remain usable — and beautiful — after dark.",
+   439→        },
+   440→      ],
+   441→      faqs: [
+   442→        {
+   443→          q: "Is landscape lighting energy-efficient?",
+   444→          a: "In this example, modern LED low-voltage systems use a fraction of the energy of older halogen setups.",
+   445→        },
+   446→        {
+   447→          q: "Can lighting be added to an existing landscape?",
+   448→          a: "Yes — sample installations are designed to integrate into established beds and hardscape without major disruption.",
+   449→        },
+   450→      ],
+   451→      galleryCategory: "Lighting",
+   452→    },
+   453→    {
+   454→      slug: "commercial-property-maintenance",
+   455→      icon: "Building2" as IconName,
+   456→      title: "Commercial Property Maintenance",
+   457→      short:
+   458→        "Reliable grounds care for offices, retail, restaurants, and communities.",
+   459→      cardImage:
+   460→        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/873d3f62acad.jpg",
+   461→      cardAlt:
+   462→        "Modern office building entrance with landscaped planters, young trees, and stone walkways at dusk (design inspiration)",
+   463→      intro:
+   464→        "Commercial grounds are the first impression a business makes. This example service covers scheduled maintenance that keeps entrances, walkways, and common areas presentable year-round.",
+   465→      types: [
+   466→        "Office park and corporate campus grounds care",
+   467→        "Retail plaza and restaurant exterior maintenance",
+   468→        "HOA and residential community common areas",
+   469→        "Seasonal color and container programs",
+   470→        "Snow and ice management add-ons",
+   471→      ],
+   472→      benefits: [
+   473→        {
+   474→          title: "Scheduled around your business",
+   475→          text: "Service windows planned to avoid disrupting tenants, customers, or events.",
+   476→        },
+   477→        {
+   478→          title: "Consistent presentation",
+   479→          text: "Checklists keep entrances, beds, and walkways at the same standard every visit.",
+   480→        },
+   481→        {
+   482→          title: "One point of contact",
+   483→          text: "Property managers get clear reporting and a single contact for all grounds work.",
+   484→        },
+   485→      ],
+   486→      faqs: [
+   487→        {
+   488→          q: "Do you offer seasonal contracts?",
+   489→          a: "In this example, annual and seasonal contracts are available for commercial properties with defined scopes and schedules.",
+   490→        },
+   491→        {
+   492→          q: "Can you work across multiple properties?",
+   493→          a: "Yes — multi-site programs within the service area can be coordinated as a single agreement in this sample structure.",
+   494→        },
+   495→      ],
+   496→      galleryCategory: "Commercial",
+   497→    },
+   498→    {
+   499→      slug: "snow-ice-management",
+   500→      icon: "Snowflake" as IconName,
+   501→      title: "Snow & Ice Management",
+   502→      short:
+   503→        "Seasonal snow clearing and ice control for homes and commercial properties.",
+   504→      cardImage:
+   505→        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/f15060a3bef7.jpg",
+   506→      cardAlt:
+   507→        "Two workers in high-visibility jackets shoveling snow from a residential driveway in winter",
+   508→      intro:
+   509→        "Winter is its own season of property care. Driveways, walkways, and entrances can stay clear and safe through storms and refreezes.",
+   510→      types: [
+   511→        "Residential driveway and walkway clearing",
+   512→        "Commercial lot and entrance snow removal",
+   513→        "Ice-melting applications",
+   514→        "Storm-response scheduling (example offering)",
+   515→        "Seasonal contracts for recurring winter service",
+   516→      ],
+   517→      benefits: [
+   518→        {
+   519→          title: "Response when it matters",
+   520→          text: "Sample programs prioritize early-morning clearing before commutes and business hours.",
+   521→        },
+   522→        {
+   523→          title: "Ice, not just snow",
+   524→          text: "Refreeze-prone areas get appropriate ice control as part of the visit.",
+   525→        },
+   526→        {
+   527→          title: "Winter planning",
+   528→          text: "Seasonal agreements set trigger depths and priorities before the first storm.",
+   529→        },
+   530→      ],
+   531→      faqs: [
+   532→        {
+   533→          q: "How does a seasonal snow contract work?",
+   534→          a: "In this example, properties are signed up before winter with agreed trigger depths, priority order, and scope — then cleared automatically each event.",
+   535→        },
+   536→        {
+   537→          q: "Do you clear commercial properties overnight?",
+   538→          a: "Sample commercial programs can include overnight and pre-dawn clearing windows so businesses open safely.",
+   539→        },
+   540→      ],
+   541→      galleryCategory: "Commercial",
+   542→    },
+   543→  ],
+   544→
+   545→  /* ── GALLERY (13) ────────────────────────────────────────────────────── */
+   546→  gallery: [
+   547→    {
+   548→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/0edd372d6b65.jpg",
+   549→      alt: "Sweeping estate lawn bordered by mature trees and manicured garden beds",
+   550→      category: "Backyards",
+   551→    },
+   552→    {
+   553→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/2d9d8b62f613.jpg",
+   554→      alt: "Intimate backyard dining table styled with candles and string lights under a brick arch (design inspiration)",
+   555→      category: "Backyards",
+   556→    },
+   557→    {
+   558→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/d9684f849771.jpg",
+   559→      alt: "Residential garden bed with boulder accents, dark mulch, and young plantings beside a home (example project concept)",
+   560→      category: "Backyards",
+   561→    },
+   562→    {
+   563→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/a7952776af3b.jpg",
+   564→      alt: "Curving bluestone walkway crossing a gravel garden toward a stone house entrance (design inspiration)",
+   565→      category: "Patios",
+   566→    },
+   567→    {
+   568→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/15bfd486be3e.jpg",
+   569→      alt: "Natural flagstone path winding through shrubs and lawn toward the coast (design inspiration)",
+   570→      category: "Patios",
+   571→    },
+   572→    {
+   573→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/4d40c11dd195.jpg",
+   574→      alt: "Vibrant annual flower bed with layered reds, pinks, and ornamental grasses (design inspiration)",
+   575→      category: "Gardens",
+   576→    },
+   577→    {
+   578→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/4bfabf251d6f.jpg",
+   579→      alt: "Northeast colonial home with a colorful perennial border along the front path (design inspiration)",
+   580→      category: "Gardens",
+   581→    },
+   582→    {
+   583→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/deff4ff90a60.jpg",
+   584→      alt: "Mixed flower border in pink, white, and yellow against an old brick garden wall (design inspiration)",
+   585→      category: "Gardens",
+   586→    },
+   587→    {
+   588→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/d5f855638eee.jpg",
+   589→      alt: "City streetscape with young street trees, planters, and benches outside a glass office building (example project concept)",
+   590→      category: "Commercial",
+   591→    },
+   592→    {
+   593→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/9e80eceb181d.jpg",
+   594→      alt: "Community courtyard with a brick fountain, trimmed hedges, and shade trees between buildings (example project concept)",
+   595→      category: "Commercial",
+   596→    },
+   597→    {
+   598→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/467581506ba1.png",
+   599→      alt: "Timber-framed pergola outdoor dining room with warm uplighting on stone walls at night (design inspiration)",
+   600→      category: "Lighting",
+   601→    },
+   602→    {
+   603→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/6854485710c0.jpeg",
+   604→      alt: "Garden path illuminated by low-voltage path lights leading to a lit home at night (design inspiration)",
+   605→      category: "Lighting",
+   606→    },
+   607→    {
+   608→      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/e6811f55194b.jpg",
+   609→      alt: "Backyard pavilion with warm string lights over a seated patio at dusk (design inspiration)",
+   610→      category: "Lighting",
+   611→    },
+   612→  ],
+   613→  galleryCategories: ["Backyards", "Patios", "Gardens", "Commercial", "Lighting"],
+   614→
+   615→  /* ── VALUE POINTS (sample positioning) ───────────────────────────────── */
+   616→  values: [
+   617→    {
+   618→      icon: "PencilRuler" as IconName,
+   619→      title: "Thoughtful design",
+   620→      text: "Every plan starts with your property, your style, and how you actually live outside.",
+   621→    },
+   622→    {
+   623→      icon: "MessagesSquare" as IconName,
+   624→      title: "Responsive communication",
+   625→      text: "Clear updates, straightforward scheduling, and a team that picks up the phone.",
+   626→    },
+   627→    {
+   628→      icon: "Sprout" as IconName,
+   629→      title: "Solutions tailored to the property",
+   630→      text: "No cookie-cutter templates — recommendations shaped around your space and budget.",
+   631→    },
+   632→  ],
+   633→
+   634→  /* ── BENEFITS (why customers choose this type of service) ────────────── */
+   635→  benefits: [
+   636→    {
+   637→      icon: "ClipboardList" as IconName,
+   638→      title: "Convenient estimate requests",
+   639→      text: "Start online in about a minute, or call to talk it through.",
+   640→    },
+   641→    {
+   642→      icon: "PencilRuler" as IconName,
+   643→      title: "Personalized project planning",
+   644→      text: "Plans shaped around your property, preferences, and priorities.",
+   645→    },
+   646→    {
+   647→      icon: "MessagesSquare" as IconName,
+   648→      title: "Clear communication",
+   649→      text: "Know what's happening and when — before, during, and after visits.",
+   650→    },
+   651→    {
+   652→      icon: "Home" as IconName,
+   653→      title: "Residential and commercial",
+   654→      text: "Solutions for homes, businesses, and residential communities.",
+   655→    },
+   656→    {
+   657→      icon: "CalendarClock" as IconName,
+   658→      title: "Seasonal service options",
+   659→      text: "Recurring visits and seasonal programs across the whole year.",
+   660→    },
+   661→    {
+   662→      icon: "MapPin" as IconName,
+   663→      title: "Local service-area focus",
+   664→      text: "Focused on neighborhoods across Queens, Brooklyn, and Nassau County.",
+   665→    },
+   666→  ],
+   667→
+   668→  /* ── PROCESS ─────────────────────────────────────────────────────────── */
+   669→  process: [
+   670→    {
+   671→      step: "01",
+   672→      title: "Tell Us About Your Property",
+   673→      text: "Share a few details about your space and what you'd like to achieve. Photos help, too.",
+   674→    },
+   675→    {
+   676→      step: "02",
+   677→      title: "Schedule a Consultation",
+   678→      text: "Set up a convenient time to walk the property and talk through ideas together.",
+   679→    },
+   680→    {
+   681→      step: "03",
+   682→      title: "Review Your Project Plan",
+   683→      text: "Receive a clear scope and straightforward pricing before any work begins.",
+   684→    },
+   685→    {
+   686→      step: "04",
+   687→      title: "Enjoy Your Outdoor Space",
+   688→      text: "Sit back while the work is handled — then enjoy the result in every season.",
+   689→    },
+   690→  ],
+   691→
+   692→  /* ── ESTIMATE FORM OPTIONS ───────────────────────────────────────────── */
+   693→  estimate: {
+   694→    services: [
+   695→      "Lawn care",
+   696→      "Landscape design",
+   697→      "Patio or pavers",
+   698→      "Seasonal cleanup",
+   699→      "Commercial maintenance",
+   700→      "Other",
+   701→    ],
+   702→    propertyTypes: ["Residential", "Commercial", "Property management / HOA"],
+   703→    timelines: [
+   704→      "As soon as possible",
+   705→      "Within 1–3 months",
+   706→      "Planning for later this year",
+   707→    ],
+   708→    budgets: [
+   709→      "Under $5,000",
+   710→      "$5,000 – $15,000",
+   711→      "$15,000 – $50,000",
+   712→      "$50,000 or more",
+   713→      "Not sure yet",
+   714→    ],
+   715→    contactMethods: ["Phone call", "Text message", "Email"],
+   716→  },
+   717→
+   718→  /* ── AI / LEAD FLOW DEMONSTRATION ────────────────────────────────────── */
+   719→  leadFlow: {
+   720→    title: "See How a Smart Inquiry Works",
+   721→    intro:
+   722→      "This interactive walkthrough shows how a website inquiry could flow into a business pipeline — from first request to scheduled consultation. All records, notifications, and messages below are examples.",
+   723→    steps: [
+   724→      {
+   725→        key: "request",
+   726→        label: "Customer requests an estimate",
+   727→        text: "A homeowner fills out the guided estimate form on the website and taps submit.",
+   728→      },
+   729→      {
+   730→        key: "pipeline",
+   731→        label: "Inquiry appears in the pipeline",
+   732→        text: "The request lands in the business's pipeline as a new lead card with the service, property type, and ZIP code.",
+   733→      },
+   734→      {
+   735→        key: "notify",
+   736→        label: "Business receives a notification",
+   737→        text: "The team gets an instant heads-up on their phone or desktop — no more missed inquiries.",
+   738→      },
+   739→      {
+   740→        key: "respond",
+   741→        label: "Customer receives a response",
+   742→        text: "The business replies quickly with a friendly acknowledgment and next steps.",
+   743→      },
+   744→      {
+   745→        key: "schedule",
+   746→        label: "Consultation is scheduled",
+   747→        text: "A walkthrough time is booked and synced to the calendar for the estimator.",
+   748→      },
+   749→      {
+   750→        key: "followup",
+   751→        label: "Team follows up on the estimate",
+   752→        text: "After the estimate is sent, the pipeline tracks follow-ups until the project is booked or closed.",
+   753→      },
+   754→    ],
+   755→    sampleLead: {
+   756→      name: "A. Rivera (Example lead)",
+   757→      service: "Patio & paver installation",
+   758→      property: "Residential · Forest Hills",
+   759→      zip: "ZIP 11375",
+   760→      timeline: "Within 1–3 months",
+   761→      preferredTime: "Weekday mornings",
+   762→      message:
+   763→        "Hi! We'd like a quote for a bluestone patio, roughly 400 sq ft, in our backyard. Happy to share photos.",
+   764→      notification: "New estimate request — Patio & pavers · ZIP 11375",
+   765→      response:
+   766→        "Thanks for reaching out, A.! This is an example auto-response confirming your request was received. A real business would follow up shortly to schedule a walkthrough.",
+   767→      appointment: "Tue · 10:00 AM · On-site walkthrough (Example)",
+   768→    },
+   769→  },
+   770→
+   771→  /* ── SEASONS ─────────────────────────────────────────────────────────── */
+   772→  seasons: [
+   773→    {
+   774→      key: "spring",
+   775→      name: "Spring",
+   776→      icon: "Flower2" as IconName,
+   777→      items: ["Spring cleanup", "Mulching", "Planting", "Lawn preparation"],
+   778→      blurb:
+   779→        "Wake the property up — beds cleaned, edges defined, and fresh plantings ready to grow.",
+   780→    },
+   781→    {
+   782→      key: "summer",
+   783→      name: "Summer",
+   784→      icon: "Sun" as IconName,
+   785→      items: [
+   786→        "Lawn maintenance",
+   787→        "Irrigation support",
+   788→        "Garden care",
+   789→        "Outdoor living projects",
+   790→      ],
+   791→      blurb:
+   792→        "Keep everything looking its best through the season and tackle bigger outdoor projects.",
+   793→    },
+   794→    {
+   795→      key: "fall",
+   796→      name: "Fall",
+   797→      icon: "Leaf" as IconName,
+   798→      items: ["Leaf cleanup", "Planting", "Lawn preparation", "Seasonal maintenance"],
+   799→      blurb:
+   800→        "Clear the leaves, protect the lawn, and plant for a strong start next spring.",
+   801→    },
+   802→    {
+   803→      key: "winter",
+   804→      name: "Winter",
+   805→      icon: "Snowflake" as IconName,
+   806→      items: ["Snow and ice management", "Winter planning", "Property care"],
+   807→      blurb:
+   808→        "Driveways and walkways stay clear while plans are made for the year ahead.",
+   809→    },
+   810→  ],
+   811→
+   812→  /* ── SERVICE AREAS (editable sample coverage) ────────────────────────── */
+   813→  areas: [
+   814→    {
+   815→      borough: "Queens",
+   816→      neighborhoods: [
+   817→        "Jackson Heights",
+   818→        "Astoria",
+   819→        "Forest Hills",
+   820→        "Bayside",
+   821→        "Flushing",
+   822→        "Fresh Meadows",
+   823→        "Middle Village",
+   824→        "Whitestone",
+   825→      ],
+   826→    },
+   827→    {
+   828→      borough: "Brooklyn",
+   829→      neighborhoods: ["Williamsburg", "Greenpoint", "Park Slope", "Bay Ridge"],
+   830→    },
+   831→    {
+   832→      borough: "Nassau County",
+   833→      neighborhoods: [
+   834→        "New Hyde Park",
+   835→        "Garden City",
+   836→        "Mineola",
+   837→        "Floral Park",
+   838→        "Great Neck",
+   839→        "Westbury",
+   840→      ],
+   841→    },
+   842→  ],
+   843→  areasNote:
+   844→    "Coverage areas shown are editable samples for demonstration. Actual service areas must be confirmed with the business before launch.",
+   845→  areasCta:
+   846→    "Don't see your neighborhood? Contact us to ask about service availability.",
+   847→
+   848→  /* ── REVIEW PLACEHOLDERS ─────────────────────────────────────────────── */
+   849→  reviewPlaceholderText:
+   850→    "Client testimonial placeholder — replace with a real, approved customer review.",
+   851→
+   852→  /* ── FAQ ─────────────────────────────────────────────────────────────── */
+   853→  faqs: [
+   854→    {
+   855→      q: "What landscaping services do you offer?",
+   856→      a: "In this example, Evergreen offers lawn care and maintenance, landscape design and installation, seasonal cleanups, patios and walkways, garden design and planting, tree and shrub care, irrigation, landscape lighting, commercial property maintenance, and snow and ice management. This list is sample content that can be matched to a real service menu.",
+   857→    },
+   858→    {
+   859→      q: "Do you work with residential and commercial properties?",
+   860→      a: "Yes — as shown in this concept, the same team can care for private homes as well as offices, retail plazas, restaurants, and residential communities. Scope and schedules are tailored to each property type.",
+   861→    },
+   862→    {
+   863→      q: "What areas do you serve?",
+   864→      a: "Sample coverage includes neighborhoods across Queens and Brooklyn plus Nassau County communities such as Garden City, Mineola, and Great Neck. Actual coverage areas would be confirmed by the real business before launch.",
+   865→    },
+   866→    {
+   867→      q: "How do I request an estimate?",
+   868→      a: "In this demo, the guided estimate form walks you through service, property type, and project details in a few short steps. A real website would connect this form to the business's preferred inbox or CRM.",
+   869→    },
+   870→    {
+   871→      q: "Can I schedule recurring lawn maintenance?",
+   872→      a: "Yes — example programs include weekly and biweekly visits during the growing season, with a consistent day so the service becomes easy to plan around.",
+   873→    },
+   874→    {
+   875→      q: "Do you provide seasonal cleanup?",
+   876→      a: "Spring and fall cleanup programs are part of this sample offering, covering leaves, bed resets, cutbacks, and preparation for the season ahead.",
+   877→    },
+   878→    {
+   879→      q: "Can you help with patio and garden projects?",
+   880→      a: "Patios, walkways, and garden plantings are core example services — from a simple front path refresh to a complete backyard redesign concept.",
+   881→    },
+   882→  ],
+   883→  faqNote:
+   884→    "Answers above are editable example copy for demonstration and should be replaced with verified business details before launch.",
+   885→
+   886→  /* ── CHAT WIDGET (demo) ──────────────────────────────────────────────── */
+   887→  chat: {
+   888→    title: "Evergreen Assistant",
+   889→    demoLabel: "Demo chat",
+   890→    opening: "Hi! Looking for help with your outdoor space?",
+   891→    quickReplies: [
+   892→      { label: "Request an estimate", key: "estimate" },
+   893→      { label: "Explore services", key: "services" },
+   894→      { label: "Check service areas", key: "areas" },
+   895→    ],
+   896→  },
+   897→} as const;
+   898→
+   899→export type Service = (typeof siteConfig.services)[number];
+   900→export type GalleryItem = (typeof siteConfig.gallery)[number];
+   901→
+   902→export function getService(slug: string): Service | undefined {
+   903→  return siteConfig.services.find((s) => s.slug === slug);
+   904→}
+   905→

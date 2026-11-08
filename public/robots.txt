@@ -1,14 +1,4 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
+# Demo Website Concept — not intended for search indexing.
+# A launched business website would replace this file to allow crawling.
 User-agent: *
-Allow: /
+Disallow: /

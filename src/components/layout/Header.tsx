@@ -59,6 +59,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [megaOpen, setMegaOpen] = useState(false);
 
   const overHero = path === "/" && !scrolled;
   const isServiceDetail = path.startsWith("/services/");
@@ -70,14 +71,9 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close the mobile sheet whenever the route changes
-  useEffect(() => {
-    setMobileOpen(false);
-    setMobileServicesOpen(false);
-  }, [path]);
-
   const go = (to: string) => {
     setMobileOpen(false);
+    setMobileServicesOpen(false);
     navigate(to);
   };
 
@@ -105,7 +101,10 @@ export function Header() {
         {/* Desktop nav */}
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
           {/* Services mega menu */}
-          <Popover>
+          <Popover
+            open={megaOpen}
+            onOpenChange={setMegaOpen}
+          >
             <PopoverTrigger asChild>
               <button
                 className={cn(
@@ -133,7 +132,10 @@ export function Header() {
                 {siteConfig.services.map((s) => (
                   <button
                     key={s.slug}
-                    onClick={() => navigate(`/services/${s.slug}`)}
+                    onClick={() => {
+                      setMegaOpen(false);
+                      navigate(`/services/${s.slug}`);
+                    }}
                     className={cn(
                       "flex items-start gap-2.5 rounded-lg p-2.5 text-left transition-colors hover:bg-forest/5",
                       path === `/services/${s.slug}` && "bg-forest/5"
@@ -155,7 +157,10 @@ export function Header() {
               </div>
               <div className="mt-2 border-t border-border pt-2">
                 <button
-                  onClick={() => navigate("/services")}
+                  onClick={() => {
+                    setMegaOpen(false);
+                    navigate("/services");
+                  }}
                   className="w-full rounded-md px-2.5 py-2 text-left text-sm font-semibold text-forest underline-offset-4 hover:underline"
                 >
                   View all services →
