@@ -6,7 +6,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Expand, X } from "lucide-react";
 import { siteConfig, type GalleryItem } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { EASE } from "@/lib/motion";
+import { EASE, SPRING } from "@/lib/motion";
 
 type GalleryGridProps = {
   /** Limit the number of items shown (e.g. 6 for the home preview). */
@@ -25,6 +25,8 @@ export function GalleryGrid({ limit, showNote = true, categories, className }: G
   const reduce = useReducedMotion();
   const [active, setActive] = useState<string>("All");
   const [lightbox, setLightbox] = useState<GalleryItem | null>(null);
+  /** Direction of the last lightbox navigation: 1 = next, -1 = prev. */
+  const [lightboxDir, setLightboxDir] = useState(1);
 
   const pool = useMemo(
     () =>
@@ -52,6 +54,7 @@ export function GalleryGrid({ limit, showNote = true, categories, className }: G
         const idx = pool.findIndex((g) => g.src === lightbox.src);
         const dir = e.key === "ArrowRight" ? 1 : -1;
         const next = pool[(idx + dir + pool.length) % pool.length];
+        setLightboxDir(dir);
         setLightbox(next);
       }
     };
@@ -148,19 +151,36 @@ export function GalleryGrid({ limit, showNote = true, categories, className }: G
       </motion.div>
 
       {/* Lightbox */}
+      <AnimatePresence>
       {lightbox && (
-        <div
+        <motion.div
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={reduce ? undefined : { opacity: 0 }}
+          transition={{ duration: 0.25, ease: EASE }}
           className="fixed inset-0 z-[70] flex items-center justify-center bg-charcoal/90 p-4 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-label="Image viewer"
           onClick={closeLightbox}
         >
-          <div
+          <motion.div
+            initial={reduce ? false : { scale: 0.9, y: 28 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={reduce ? undefined : { scale: 0.94, y: 16, opacity: 0 }}
+            transition={SPRING}
             className="relative max-h-[92dvh] w-full max-w-4xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-forest-deep shadow-2xl">
+            <AnimatePresence mode="wait" initial={false} custom={lightboxDir}>
+            <motion.div
+              key={lightbox.src}
+              initial={reduce ? false : { opacity: 0, x: 44 * lightboxDir }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={reduce ? undefined : { opacity: 0, x: -36 * lightboxDir }}
+              transition={{ duration: 0.28, ease: EASE }}
+              className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-forest-deep shadow-2xl"
+            >
               <Image
                 src={lightbox.src}
                 alt={lightbox.alt}
@@ -169,7 +189,8 @@ export function GalleryGrid({ limit, showNote = true, categories, className }: G
                 className="object-cover"
                 priority
               />
-            </div>
+            </motion.div>
+            </AnimatePresence>
             <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
               <div className="max-w-2xl">
                 <span className="inline-flex rounded-full bg-gold px-2.5 py-0.5 text-[0.62rem] font-black uppercase tracking-[0.16em] text-charcoal">
@@ -187,9 +208,10 @@ export function GalleryGrid({ limit, showNote = true, categories, className }: G
                         (lightboxIndex - 1 + pool.length) %
                           pool.length
                       ];
+                    setLightboxDir(-1);
                     setLightbox(next);
                   }}
-                  className="rounded-full border border-ivory/25 px-3.5 py-1.5 transition-colors hover:bg-ivory/10"
+                  className="rounded-full border border-ivory/25 px-3.5 py-1.5 transition-colors hover:bg-ivory/10 active:scale-95"
                   aria-label="Previous image"
                 >
                   ← Prev
@@ -201,26 +223,30 @@ export function GalleryGrid({ limit, showNote = true, categories, className }: G
                   onClick={() => {
                     const next =
                       pool[(lightboxIndex + 1) % pool.length];
+                    setLightboxDir(1);
                     setLightbox(next);
                   }}
-                  className="rounded-full border border-ivory/25 px-3.5 py-1.5 transition-colors hover:bg-ivory/10"
+                  className="rounded-full border border-ivory/25 px-3.5 py-1.5 transition-colors hover:bg-ivory/10 active:scale-95"
                   aria-label="Next image"
                 >
                   Next →
                 </button>
               </div>
             </div>
-            <button
+            <motion.button
               onClick={closeLightbox}
-              className="absolute -top-3 right-0 grid size-10 place-items-center rounded-full bg-ivory text-charcoal shadow-xl transition-transform hover:scale-105 sm:-right-3 sm:-top-3"
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.92 }}
+              className="absolute -top-3 right-0 grid size-10 place-items-center rounded-full bg-ivory text-charcoal shadow-xl transition-transform sm:-right-3 sm:-top-3"
               aria-label="Close image viewer"
               autoFocus
             >
               <X className="size-5" aria-hidden="true" />
-            </button>
-          </div>
-        </div>
+            </motion.button>
+          </motion.div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </div>
   );
 }

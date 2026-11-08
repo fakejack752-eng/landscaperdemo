@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import { ChevronDown, Leaf, Menu, Phone, X } from "lucide-react";
 import { useRouter } from "@/lib/router";
 import { siteConfig, getService } from "@/config/site";
 import { Icon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
+import { EASE } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -21,12 +23,16 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
+/** Shared hover/active underline for desktop nav items. */
+const navUnderline =
+  "relative after:pointer-events-none after:absolute after:inset-x-3 after:bottom-0.5 after:h-[2px] after:origin-left after:scale-x-0 after:rounded-full after:bg-gold after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100";
+
 function Wordmark({ light }: { light: boolean }) {
   return (
-    <span className="flex items-center gap-2.5 text-left">
+    <span className="group flex items-center gap-2.5 text-left">
       <span
         className={cn(
-          "grid size-9 shrink-0 place-items-center rounded-full transition-colors",
+          "grid size-9 shrink-0 place-items-center rounded-full transition-all duration-300 group-hover:rotate-[10deg] group-hover:scale-105",
           light ? "bg-ivory/10 text-gold" : "bg-forest text-gold"
         )}
       >
@@ -56,10 +62,15 @@ function Wordmark({ light }: { light: boolean }) {
 
 export function Header() {
   const { path, navigate } = useRouter();
+  const reduce = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
+
+  // Thin gold reading-progress line under the header.
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 130, damping: 26, mass: 0.4 });
 
   const overHero = path === "/" && !scrolled;
   const isServiceDetail = path.startsWith("/services/");
@@ -81,7 +92,10 @@ export function Header() {
     target === "/" ? path === "/" : path.startsWith(target);
 
   return (
-    <header
+    <motion.header
+      initial={reduce ? false : { y: -28, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.55, ease: EASE }}
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         overHero
@@ -89,6 +103,12 @@ export function Header() {
           : "border-b border-border/70 bg-ivory/90 shadow-[0_1px_12px_rgba(23,33,27,0.06)] backdrop-blur-md"
       )}
     >
+      {/* Reading progress */}
+      <motion.div
+        aria-hidden="true"
+        style={{ scaleX: progress }}
+        className="absolute inset-x-0 bottom-0 h-[2px] origin-left bg-gold/90"
+      />
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:h-[4.5rem] lg:px-8">
         <button
           onClick={() => go("/")}
@@ -109,10 +129,11 @@ export function Header() {
               <button
                 className={cn(
                   "flex items-center gap-1 rounded-md px-3 py-2 text-sm font-semibold transition-colors outline-offset-2",
+                  navUnderline,
                   overHero
                     ? "text-ivory hover:bg-ivory/10"
                     : "text-foreground/80 hover:bg-forest/5 hover:text-forest",
-                  isServiceDetail && !overHero && "text-forest bg-forest/5"
+                  isServiceDetail && !overHero && "text-forest bg-forest/5 after:scale-x-100"
                 )}
               >
                 Services
@@ -178,11 +199,12 @@ export function Header() {
                 aria-current={activePath(item.path) ? "page" : undefined}
                 className={cn(
                   "rounded-md px-3 py-2 text-sm font-semibold transition-colors outline-offset-2",
+                  navUnderline,
                   overHero
                     ? "text-ivory hover:bg-ivory/10"
                     : "text-foreground/80 hover:bg-forest/5 hover:text-forest",
-                  activePath(item.path) && !overHero && "text-forest bg-forest/5",
-                  activePath(item.path) && overHero && "text-gold"
+                  activePath(item.path) && !overHero && "text-forest bg-forest/5 after:scale-x-100",
+                  activePath(item.path) && overHero && "text-gold after:scale-x-100"
                 )}
               >
                 {item.label}
@@ -204,7 +226,7 @@ export function Header() {
           </a>
           <Button
             onClick={() => navigate("/estimate")}
-            className="rounded-full bg-gold px-5 font-bold text-charcoal shadow-sm transition-all hover:bg-gold-light hover:shadow-md"
+            className="rounded-full bg-gold px-5 font-bold text-charcoal shadow-sm transition-all hover:bg-gold-light hover:shadow-md active:scale-95"
           >
             Request an Estimate
           </Button>
@@ -239,14 +261,23 @@ export function Header() {
               </SheetDescription>
             </SheetHeader>
             <div className="custom-scroll flex-1 overflow-y-auto p-5">
-              <button
+              <motion.div
+                className="space-y-1"
+                initial={reduce ? false : "hidden"}
+                animate="show"
+                variants={{ hidden: {}, show: { transition: { staggerChildren: 0.045 } } }}
+              >
+              <motion.button
+                variants={{ hidden: { opacity: 0, x: 16 }, show: { opacity: 1, x: 0, transition: { duration: 0.35, ease: EASE } } }}
                 onClick={() => go("/")}
                 className="block w-full rounded-lg px-3 py-3 text-left text-base font-semibold text-forest hover:bg-forest/5"
               >
                 Home
-              </button>
+              </motion.button>
 
-              <div>
+              <motion.div
+                variants={{ hidden: { opacity: 0, x: 16 }, show: { opacity: 1, x: 0, transition: { duration: 0.35, ease: EASE } } }}
+              >
                 <button
                   onClick={() => setMobileServicesOpen((v) => !v)}
                   aria-expanded={mobileServicesOpen}
@@ -255,49 +286,61 @@ export function Header() {
                   Services
                   <ChevronDown
                     className={cn(
-                      "size-4 transition-transform",
+                      "size-4 transition-transform duration-300",
                       mobileServicesOpen && "rotate-180"
                     )}
                     aria-hidden="true"
                   />
                 </button>
-                {mobileServicesOpen && (
-                  <div className="ml-3 border-l border-border pl-3">
-                    {siteConfig.services.map((s) => (
-                      <button
-                        key={s.slug}
-                        onClick={() => go(`/services/${s.slug}`)}
-                        className="block w-full rounded-lg px-3 py-2.5 text-left text-[0.95rem] font-medium text-foreground/85 hover:bg-forest/5"
-                      >
-                        {s.title}
-                      </button>
-                    ))}
-                    <button
-                      onClick={() => go("/services")}
-                      className="block w-full rounded-lg px-3 py-2.5 text-left text-[0.95rem] font-bold text-earth-deep hover:bg-forest/5"
+                <AnimatePresence initial={false}>
+                  {mobileServicesOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: EASE }}
+                      className="overflow-hidden"
                     >
-                      View all services →
-                    </button>
-                  </div>
-                )}
-              </div>
+                      <div className="ml-3 border-l border-border pl-3">
+                        {siteConfig.services.map((s) => (
+                          <button
+                            key={s.slug}
+                            onClick={() => go(`/services/${s.slug}`)}
+                            className="block w-full rounded-lg px-3 py-2.5 text-left text-[0.95rem] font-medium text-foreground/85 hover:bg-forest/5"
+                          >
+                            {s.title}
+                          </button>
+                        ))}
+                        <button
+                          onClick={() => go("/services")}
+                          className="block w-full rounded-lg px-3 py-2.5 text-left text-[0.95rem] font-bold text-earth-deep hover:bg-forest/5"
+                        >
+                          View all services →
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
 
               {siteConfig.nav
                 .filter((n) => n.label !== "Home")
                 .map((item) => (
-                  <button
+                  <motion.button
                     key={item.path}
+                    variants={{ hidden: { opacity: 0, x: 16 }, show: { opacity: 1, x: 0, transition: { duration: 0.35, ease: EASE } } }}
                     onClick={() => go(item.path)}
                     className="block w-full rounded-lg px-3 py-3 text-left text-base font-semibold text-forest hover:bg-forest/5"
                   >
                     {item.label}
-                  </button>
+                  </motion.button>
                 ))}
+              </motion.div>
             </div>
             <div className="space-y-3 border-t border-border p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
               <Button
                 onClick={() => go("/estimate")}
-                className="h-12 w-full rounded-full bg-gold text-base font-bold text-charcoal hover:bg-gold-light"
+                className="h-12 w-full rounded-full bg-gold text-base font-bold text-charcoal transition-transform hover:bg-gold-light active:scale-[0.97]"
               >
                 Request an Estimate
               </Button>
@@ -312,7 +355,7 @@ export function Header() {
           </SheetContent>
         </Sheet>
       </div>
-    </header>
+    </motion.header>
   );
 }
 

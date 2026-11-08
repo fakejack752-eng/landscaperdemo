@@ -1,11 +1,13 @@
 "use client";
 
+import { motion, useReducedMotion } from "framer-motion";
 import { siteConfig } from "@/config/site";
 import { SectionHeading } from "@/components/shared/SectionHeading";
-import { Reveal, Stagger, StaggerItem } from "@/lib/motion";
+import { EASE, Reveal, Stagger, StaggerItem } from "@/lib/motion";
 
 /** Four-step engagement process — horizontal timeline on desktop, vertical on mobile. */
 export function ProcessSection() {
+  const reduce = useReducedMotion();
   return (
     <section className="bg-ivory py-20 lg:py-28" aria-labelledby="process-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -16,9 +18,13 @@ export function ProcessSection() {
         />
 
         <div className="relative mt-16">
-          {/* Desktop connector line */}
-          <div
-            className="absolute left-0 right-0 top-[2.4rem] hidden h-px bg-gradient-to-r from-transparent via-earth/40 to-transparent lg:block"
+          {/* Desktop connector line — draws itself as the section enters */}
+          <motion.div
+            initial={reduce ? false : { scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 1.4, ease: EASE, delay: 0.3 }}
+            className="absolute left-0 right-0 top-[2.4rem] hidden h-px origin-left bg-gradient-to-r from-transparent via-earth/40 to-transparent lg:block"
             aria-hidden="true"
           />
 
@@ -27,7 +33,7 @@ export function ProcessSection() {
               <StaggerItem key={p.step}>
                 <div className="group relative text-center lg:px-3">
                   {/* Number badge */}
-                  <div className="relative z-10 mx-auto grid size-[4.8rem] place-items-center rounded-full border border-earth/30 bg-card shadow-md transition-all duration-300 group-hover:border-gold group-hover:shadow-lg">
+                  <div className="relative z-10 mx-auto grid size-[4.8rem] place-items-center rounded-full border border-earth/30 bg-card shadow-md transition-all duration-300 group-hover:rotate-3 group-hover:scale-105 group-hover:border-gold group-hover:shadow-lg">
                     <span className="font-serif text-[1.7rem] font-semibold text-earth-deep transition-colors group-hover:text-forest">
                       {p.step}
                     </span>

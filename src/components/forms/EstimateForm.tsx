@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ArrowLeft,
   ArrowRight,
@@ -23,7 +23,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { siteConfig } from "@/config/site";
 import { useEstimateStore } from "@/store/estimate";
 import { cn } from "@/lib/utils";
-import { EASE } from "@/lib/motion";
+import { EASE, SPRING } from "@/lib/motion";
 
 /* ── Types & state ─────────────────────────────────────────────────────── */
 
@@ -99,15 +99,17 @@ function ChoiceCard({
   error?: string;
   name: string;
 }) {
+  const reduce = useReducedMotion();
   return (
-    <button
+    <motion.button
       type="button"
       role="radio"
       aria-checked={checked}
       name={name}
       onClick={onSelect}
+      whileTap={reduce ? undefined : { scale: 0.98 }}
       className={cn(
-        "flex w-full items-center gap-3 rounded-xl border-2 p-4 text-left transition-all outline-offset-2",
+        "flex w-full items-center gap-3 rounded-xl border-2 p-4 text-left transition-[border-color,background-color,box-shadow] outline-offset-2",
         checked
           ? "border-forest bg-forest/[0.06] shadow-sm"
           : "border-border bg-card hover:border-forest/40"
@@ -136,9 +138,22 @@ function ChoiceCard({
           checked ? "border-forest bg-forest" : "border-border"
         )}
       >
-        {checked && <CheckCircle2 className="size-3.5 text-ivory" />}
+        <AnimatePresence initial={false}>
+          {checked && (
+            <motion.span
+              key="check"
+              initial={reduce ? false : { scale: 0, rotate: -40 }}
+              animate={{ scale: 1, rotate: 0 }}
+              exit={reduce ? undefined : { scale: 0, opacity: 0 }}
+              transition={SPRING}
+              className="grid place-items-center"
+            >
+              <CheckCircle2 className="size-3.5 text-ivory" />
+            </motion.span>
+          )}
+        </AnimatePresence>
       </span>
-    </button>
+    </motion.button>
   );
 }
 
@@ -194,6 +209,8 @@ export function EstimateForm({ compact = false }: { compact?: boolean }) {
   const [hydrated, setHydrated] = useState(false);
   /** true when a saved draft was restored into the form. */
   const [restored, setRestored] = useState(false);
+  /** Direction of the last step change: 1 = forward, -1 = back. */
+  const [dir, setDir] = useState(1);
   const topRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -252,6 +269,7 @@ export function EstimateForm({ compact = false }: { compact?: boolean }) {
   };
 
   const goTo = (next: number) => {
+    setDir(next > step ? 1 : -1);
     setStep(next);
     setErrors({});
     topRef.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
@@ -306,9 +324,14 @@ export function EstimateForm({ compact = false }: { compact?: boolean }) {
         className="rounded-3xl border border-border bg-card p-8 text-center shadow-lg sm:p-12"
         role="status"
       >
-        <span className="mx-auto grid size-16 place-items-center rounded-full bg-forest/10 text-forest">
+        <motion.span
+          initial={reduce ? false : { scale: 0.3, rotate: -16, opacity: 0 }}
+          animate={{ scale: 1, rotate: 0, opacity: 1 }}
+          transition={{ ...SPRING, delay: 0.05 }}
+          className="mx-auto grid size-16 place-items-center rounded-full bg-forest/10 text-forest"
+        >
           <PartyPopper className="size-8" aria-hidden="true" />
-        </span>
+        </motion.span>
         <h3 className="mt-5 font-serif text-3xl font-semibold text-forest">
           Demo request received.
         </h3>
@@ -418,6 +441,15 @@ export function EstimateForm({ compact = false }: { compact?: boolean }) {
             </button>
           </div>
         )}
+        {/* Step content — slides in the direction of travel */}
+        <AnimatePresence mode="wait" initial={false} custom={dir}>
+          <motion.div
+            key={step}
+            initial={reduce ? false : { opacity: 0, x: 34 * dir }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={reduce ? undefined : { opacity: 0, x: -26 * dir }}
+            transition={{ duration: 0.3, ease: EASE }}
+          >
         {step === 0 && (
           <fieldset>
             <legend className="font-serif text-2xl font-semibold text-forest">
@@ -696,6 +728,8 @@ export function EstimateForm({ compact = false }: { compact?: boolean }) {
             </div>
           </div>
         )}
+          </motion.div>
+        </AnimatePresence>
 
         {/* Nav buttons */}
         <div className="mt-8 flex flex-col-reverse items-stretch gap-3 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
@@ -713,7 +747,7 @@ export function EstimateForm({ compact = false }: { compact?: boolean }) {
             <Button
               type="button"
               onClick={next}
-              className="h-11 rounded-full bg-gold px-7 font-bold text-charcoal hover:bg-gold-light"
+              className="h-11 rounded-full bg-gold px-7 font-bold text-charcoal transition-transform hover:bg-gold-light active:scale-95"
             >
               Continue
               <ArrowRight className="size-4" aria-hidden="true" />
@@ -723,7 +757,7 @@ export function EstimateForm({ compact = false }: { compact?: boolean }) {
               type="button"
               onClick={submit}
               disabled={submitting}
-              className="h-11 rounded-full bg-forest px-7 font-bold text-ivory hover:bg-forest-deep"
+              className="h-11 rounded-full bg-forest px-7 font-bold text-ivory transition-transform hover:bg-forest-deep active:scale-95"
             >
               {submitting ? (
                 <>

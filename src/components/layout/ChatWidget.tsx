@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { MessageCircle, Send, X } from "lucide-react";
 import { useRouter } from "@/lib/router";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { useReducedMotion } from "framer-motion";
+import { EASE, SPRING } from "@/lib/motion";
 import { Button } from "@/components/ui/button";
 
 type Msg = {
@@ -101,8 +102,14 @@ export function ChatWidget() {
   return (
     <div className="fixed bottom-[4.25rem] right-4 z-40 flex flex-col items-end gap-3 lg:bottom-6 lg:right-6">
       {/* Panel */}
-      {open && (
-        <div
+      <AnimatePresence>
+        {open && (
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 18, scale: 0.94 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={reduce ? undefined : { opacity: 0, y: 12, scale: 0.96 }}
+          transition={SPRING}
+          style={{ transformOrigin: "bottom right" }}
           className="flex max-h-[min(32rem,calc(100dvh-9rem))] w-[min(22.5rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
           role="dialog"
           aria-label="Demo chat widget"
@@ -138,8 +145,14 @@ export function ChatWidget() {
             aria-live="polite"
           >
             {messages.map((m, i) => (
-              <div
+              <motion.div
                 key={i}
+                initial={reduce ? false : { opacity: 0, y: 10, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{
+                  ...(i === messages.length - 1 ? SPRING : { duration: 0.25, ease: EASE }),
+                  delay: open && i === 0 && messages.length === 1 ? 0.15 : 0,
+                }}
                 className={cn(
                   "flex",
                   m.role === "user" ? "justify-end" : "justify-start"
@@ -167,10 +180,14 @@ export function ChatWidget() {
                     </Button>
                   )}
                 </div>
-              </div>
+              </motion.div>
             ))}
             {typing && (
-              <div className="flex justify-start">
+              <motion.div
+                initial={reduce ? false : { opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex justify-start"
+              >
                 <div className="flex gap-1 rounded-2xl rounded-bl-sm border border-border bg-card px-3.5 py-3">
                   {[0, 1, 2].map((d) => (
                     <span
@@ -180,7 +197,7 @@ export function ChatWidget() {
                     />
                   ))}
                 </div>
-              </div>
+              </motion.div>
             )}
           </div>
 
@@ -222,8 +239,9 @@ export function ChatWidget() {
             Demo chat — prewritten responses only. Not a connected AI assistant,
             and no data is sent or stored.
           </p>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
 
       {/* Launcher */}
       <button
@@ -236,17 +254,32 @@ export function ChatWidget() {
         aria-expanded={open}
       >
         <span className="relative grid size-6 place-items-center">
-          {open ? (
-            <X className="size-5" aria-hidden="true" />
-          ) : (
-            <MessageCircle className="size-5 text-gold" aria-hidden="true" />
-          )}
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={open ? "close" : "open"}
+              initial={reduce ? false : { rotate: -80, opacity: 0, scale: 0.6 }}
+              animate={{ rotate: 0, opacity: 1, scale: 1 }}
+              exit={reduce ? undefined : { rotate: 80, opacity: 0, scale: 0.6 }}
+              transition={{ duration: 0.18, ease: EASE }}
+              className="grid place-items-center"
+            >
+              {open ? (
+                <X className="size-5" aria-hidden="true" />
+              ) : (
+                <MessageCircle className="size-5 text-gold" aria-hidden="true" />
+              )}
+            </motion.span>
+          </AnimatePresence>
         </span>
         <span className="text-sm font-bold">{open ? "Close" : "Chat with us"}</span>
         {!open && (
-          <span className="absolute -right-0.5 -top-0.5 grid size-4 place-items-center rounded-full bg-gold text-[0.55rem] font-black text-charcoal">
+          <motion.span
+            animate={reduce ? undefined : { scale: [1, 1.25, 1] }}
+            transition={{ repeat: Infinity, duration: 1.8, repeatDelay: 2.6, ease: "easeInOut" }}
+            className="absolute -right-0.5 -top-0.5 grid size-4 place-items-center rounded-full bg-gold text-[0.55rem] font-black text-charcoal"
+          >
             1
-          </span>
+          </motion.span>
         )}
       </button>
     </div>

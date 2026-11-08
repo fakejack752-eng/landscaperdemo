@@ -106,7 +106,7 @@ export function PageCtaBand({
           </p>
           <button
             onClick={onPrimary ?? (() => navigate("/estimate"))}
-            className="rounded-full bg-gold px-7 py-3.5 text-sm font-bold text-charcoal shadow-lg transition-colors hover:bg-gold-light"
+            className="rounded-full bg-gold px-7 py-3.5 text-sm font-bold text-charcoal shadow-lg transition-all hover:-translate-y-0.5 hover:bg-gold-light hover:shadow-xl active:scale-95"
           >
             {primaryLabel}
           </button>

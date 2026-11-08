@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { RouterProvider, useRouter } from "@/lib/router";
 import { getService } from "@/config/site";
+import { EASE } from "@/lib/motion";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ChatWidget } from "@/components/layout/ChatWidget";
@@ -123,6 +125,7 @@ function usePageMeta(path: string, serviceSlug: string | null) {
 
 function AppShell() {
   const { path } = useRouter();
+  const reduce = useReducedMotion();
 
   const serviceMatch = path.match(/^\/services\/([a-z0-9-]+)$/);
   const serviceSlug = serviceMatch ? serviceMatch[1] : null;
@@ -175,8 +178,17 @@ function AppShell() {
         Skip to main content
       </a>
       <Header />
-      <main key={path} id="main-content" className="flex-1">
-        {page}
+      <main id="main-content" className="relative flex-1">
+        {/* Soft page transition between hash routes */}
+        <motion.div
+          key={path}
+          initial={reduce ? false : { opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: EASE }}
+          className="relative"
+        >
+          {page}
+        </motion.div>
       </main>
       <Footer />
       <ChatWidget />

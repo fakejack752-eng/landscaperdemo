@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/lib/router";
@@ -35,29 +36,49 @@ function HeroFade({
 export function Hero() {
   const { navigate } = useRouter();
   const reduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Parallax: background drifts down & zooms slightly; content floats up.
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "16%"]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1.02, 1.14]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, -70]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
     <section
+      ref={sectionRef}
       className="relative flex min-h-[100svh] items-center overflow-hidden bg-charcoal"
       aria-label="Introduction"
     >
       {/* Background image */}
       <div className="absolute inset-0" aria-hidden="true">
-        <Image
-          src={siteConfig.images.hero.src}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
+        <motion.div
+          style={reduce ? undefined : { y: bgY, scale: bgScale }}
+          className="absolute inset-0"
+        >
+          <Image
+            src={siteConfig.images.hero.src}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </motion.div>
         {/* Layered gradients for legibility + brand mood */}
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal/80 via-charcoal/45 to-charcoal/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-transparent to-charcoal/40" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-28 pt-32 sm:px-6 lg:px-8 lg:pb-36 lg:pt-40">
+      <motion.div
+        style={reduce ? undefined : { y: contentY, opacity: contentOpacity }}
+        className="relative z-10 mx-auto w-full max-w-7xl px-4 pb-28 pt-32 sm:px-6 lg:px-8 lg:pb-36 lg:pt-40"
+      >
         <div className="max-w-2xl">
           <HeroFade delay={0.05}>
             <p className="inline-flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.7rem] font-bold uppercase tracking-[0.26em] text-gold">
@@ -85,14 +106,14 @@ export function Hero() {
             <div className="mt-9 flex flex-col gap-3.5 sm:flex-row sm:items-center">
               <Button
                 onClick={() => navigate("/estimate")}
-                className="h-12 rounded-full bg-gold px-7 text-base font-bold text-charcoal shadow-lg transition-all hover:bg-gold-light hover:shadow-xl"
+                className="h-12 rounded-full bg-gold px-7 text-base font-bold text-charcoal shadow-lg transition-all hover:bg-gold-light hover:shadow-xl active:scale-95"
               >
                 Request an Estimate
               </Button>
               <Button
                 onClick={() => navigate("/gallery")}
                 variant="outline"
-                className="h-12 rounded-full border-ivory/40 bg-ivory/5 px-7 text-base font-semibold text-ivory backdrop-blur-sm transition-colors hover:bg-ivory/15 hover:text-ivory"
+                className="h-12 rounded-full border-ivory/40 bg-ivory/5 px-7 text-base font-semibold text-ivory backdrop-blur-sm transition-all hover:bg-ivory/15 hover:text-ivory active:scale-95"
               >
                 See Project Inspiration
               </Button>
@@ -116,7 +137,7 @@ export function Hero() {
             </div>
           </HeroFade>
         </div>
-      </div>
+      </motion.div>
 
       {/* Scroll hint */}
       <div

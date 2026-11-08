@@ -115,6 +115,9 @@
   }
   html {
     scroll-behavior: smooth;
+    /* Non-static root keeps framer-motion's scroll offset measurements
+       (hero parallax target) accurate and silences its dev warning. */
+    position: relative;
   }
   body {
     @apply bg-background text-foreground font-sans;

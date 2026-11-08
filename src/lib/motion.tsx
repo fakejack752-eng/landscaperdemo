@@ -5,6 +5,9 @@ import { cn } from "@/lib/utils";
 
 export const EASE: [number, number, number, number] = [0.21, 0.47, 0.32, 0.98];
 
+/** Soft spring used for micro-interactions (hover lifts, check pops, panels). */
+export const SPRING = { type: "spring", stiffness: 320, damping: 28 } as const;
+
 type RevealProps = {
   children: React.ReactNode;
   className?: string;
@@ -68,6 +71,27 @@ export function StaggerItem({ children, className }: RevealProps) {
   if (reduce) return <div className={cn("h-full", className)}>{children}</div>;
   return (
     <motion.div className={cn("h-full", className)} variants={staggerItem}>
+      {children}
+    </motion.div>
+  );
+}
+
+/** Interactive wrapper: spring lift on hover, gentle press on tap.
+ *  Falls back to a plain div when the user prefers reduced motion. */
+export function HoverLift({
+  children,
+  className,
+  lift = 5,
+}: RevealProps & { lift?: number }) {
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className}>{children}</div>;
+  return (
+    <motion.div
+      className={className}
+      whileHover={{ y: -lift }}
+      whileTap={{ scale: 0.985 }}
+      transition={SPRING}
+    >
       {children}
     </motion.div>
   );
