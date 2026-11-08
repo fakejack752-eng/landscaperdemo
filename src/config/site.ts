@@ -26,6 +26,12 @@ export const siteConfig = {
     creditUrl: "https://aiautomationny.com",
   },
 
+  /* ── SEO / SITE URL ───────────────────────────────────────────────── */
+  // Used for metadataBase (absolute Open Graph / Twitter image URLs) and
+  // sitemap.xml generation. Replace with the real production domain when
+  // this concept goes live (see README "Go-live checklist").
+  siteUrl: "https://evergreen-demo.example",
+
   /* ── BUSINESS (all placeholders) ─────────────────────────────────────── */
   business: {
     name: "Evergreen Landscape & Outdoor Living",

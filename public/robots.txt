@@ -1,4 +1,6 @@
 # Demo Website Concept — not intended for search indexing.
 # A launched business website would replace this file to allow crawling.
+# On launch, also set the real domain in siteConfig.siteUrl (src/config/site.ts)
+# so /sitemap.xml resolves, then add:  Sitemap: https://your-domain.com/sitemap.xml
 User-agent: *
 Disallow: /

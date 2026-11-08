@@ -62,13 +62,13 @@ function PanelRequest({ lead }: { lead: Lead }) {
         Website estimate form
       </p>
       <div className="mt-3 space-y-2.5">
-        {[
+        {([
           [UserRound, lead.name],
           [Tag, lead.service],
           [MapPin, `${lead.property} · ${lead.zip}`],
           [Clock, lead.timeline],
-        ].map(([IconCmp, text], i) => {
-          const I = IconCmp as typeof UserRound;
+        ] as Array<[typeof UserRound, string]>).map(([IconCmp, text], i) => {
+          const I = IconCmp;
           return (
             <div key={i} className="flex items-center gap-2.5 rounded-lg bg-ivory/80 px-3 py-2">
               <I className="size-3.5 shrink-0 text-forest" aria-hidden="true" />

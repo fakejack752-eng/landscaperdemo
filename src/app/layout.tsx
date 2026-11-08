@@ -20,6 +20,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.siteUrl),
   title: {
     default: "Evergreen Landscape & Outdoor Living | Landscaping in Queens, Brooklyn & Nassau County",
     template: "%s | Evergreen Landscape & Outdoor Living",
