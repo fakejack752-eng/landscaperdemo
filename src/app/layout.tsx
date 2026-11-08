@@ -44,10 +44,10 @@ export const metadata: Metadata = {
     siteName: "Evergreen Landscape & Outdoor Living",
     images: [
       {
-        url: siteConfig.images.hero.src,
-        width: 1600,
-        height: 900,
-        alt: siteConfig.images.hero.alt,
+        url: siteConfig.images.ogBanner.src,
+        width: 1200,
+        height: 630,
+        alt: siteConfig.images.ogBanner.alt,
       },
     ],
   },

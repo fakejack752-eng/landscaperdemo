@@ -16,7 +16,7 @@ could look and feel like.
 | Area | Details |
 | --- | --- |
 | **Pages** | Home (13 sections), Services overview, 10 Service detail pages, Project Inspiration gallery, About, Service Areas, Request an Estimate, Contact, Privacy, Terms |
-| **Conversion features** | 5-step guided estimate form (with validation + progress bar), sticky mobile action bar (Call / Get an Estimate), demo chat widget, prominent CTA buttons |
+| **Conversion features** | 5-step guided estimate form (with validation + progress bar + auto-saved in-browser draft that survives refresh), sticky mobile action bar (Call / Get an Estimate), demo chat widget, prominent CTA buttons |
 | **AI automation demo** | Interactive 6-step "See How a Smart Inquiry Works" walkthrough showing lead flow: inquiry → pipeline → notification → response → booking → follow-up (all static examples) |
 | **Compliance features** | "Demo Website Concept" badge in footer + near forms, honest testimonial placeholders, "Design inspiration" labels on imagery, AI Automation NY credit linking to https://aiautomationny.com |
 | **Tech** | Next.js 16 (App Router) · TypeScript · Tailwind CSS 4 · shadcn/ui · Framer Motion (reduced-motion aware) · Lucide icons |
@@ -130,7 +130,7 @@ chat/AI assistant) and the two demo forms (see step 6).
 
 | Feature | Status |
 | --- | --- |
-| Estimate form (5 steps) | **Simulated** — validates + confirms, sends nothing |
+| Estimate form (5 steps) | **Simulated** — validates + confirms, sends nothing. Progress auto-saves to this browser's localStorage only; "Start over" or a successful (demo) submit clears it |
 | Contact form | **Simulated** — sends nothing |
 | Chat widget | **Simulated** — prewritten replies only |
 | Lead-flow automation panel | **Simulated** — static example cards |
@@ -171,7 +171,9 @@ When a client signs off, work through these items before launch:
 5. **Replace simulated features** (chat widget, lead-flow walkthrough, review
    placeholders) — README step 8 — or remove them.
 6. **Swap sample imagery** for real project photos the client owns the rights
-   to, and update each image's alt text to describe the actual photo.
+   to, and update each image's alt text to describe the actual photo. The
+   1200×630 social share card lives at `public/images/og-banner.jpg`
+   (`siteConfig.images.ogBanner`) — regenerate it from a real project photo.
 7. **Trust signals**: only after the client provides verifiable proof, add
    license numbers, real reviews, and award/association mentions.
 8. **Social profiles**: fill `siteConfig.socialLinks` once real accounts

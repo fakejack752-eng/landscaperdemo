@@ -83,6 +83,11 @@ export const siteConfig = {
       src: "/images/6016984d529a.jpg",
       alt: "Landscaper trimming perennials beside a stone retaining wall on a residential street",
     },
+    // Social share card (Open Graph / Twitter) — exact 1200x630 for link previews
+    ogBanner: {
+      src: "/images/og-banner.jpg",
+      alt: "Luxurious landscaped backyard at dusk with a lit bluestone patio, manicured lawn, and perennial borders",
+    },
   },
 
   /* ── NAVIGATION ──────────────────────────────────────────────────────── */

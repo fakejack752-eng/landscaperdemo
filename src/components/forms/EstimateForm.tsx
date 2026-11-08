@@ -153,6 +153,31 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 
 /* ── The form ──────────────────────────────────────────────────────────── */
 
+/** localStorage key for the in-browser draft (demo convenience — nothing is
+ *  ever transmitted; clearing browser data removes it). */
+const DRAFT_KEY = "evergreen-estimate-draft-v1";
+
+function readDraft(): { data: EstimateData; step: number } | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem(DRAFT_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as { data?: unknown; step?: unknown };
+    if (!parsed || typeof parsed !== "object" || !parsed.data) return null;
+    const d = parsed.data as Record<string, unknown>;
+    // Only accept string fields that match the EstimateData shape.
+    const keys = Object.keys(EMPTY) as Array<keyof EstimateData>;
+    if (!keys.every((k) => typeof d[k] === "string")) return null;
+    const step =
+      typeof parsed.step === "number" && Number.isInteger(parsed.step)
+        ? Math.min(Math.max(parsed.step, 0), 4)
+        : 0;
+    return { data: { ...EMPTY, ...(d as EstimateData) }, step };
+  } catch {
+    return null;
+  }
+}
+
 export function EstimateForm({ compact = false }: { compact?: boolean }) {
   const reduce = useReducedMotion();
   const prefill = useEstimateStore((s) => s.prefillService);
@@ -165,14 +190,61 @@ export function EstimateForm({ compact = false }: { compact?: boolean }) {
   const [errors, setErrors] = useState<Errors>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  /** true once the localStorage draft has been read (client only). */
+  const [hydrated, setHydrated] = useState(false);
+  /** true when a saved draft was restored into the form. */
+  const [restored, setRestored] = useState(false);
   const topRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  /* Restore a saved draft after hydration (avoids SSR mismatches).
+   * Deferred by one tick — React 19 lint rules forbid synchronous setState
+   * inside effects, and the delay is imperceptible.
+   * A service prefill from a service page always wins over a saved draft. */
+  useEffect(() => {
+    const t = setTimeout(() => {
+      const draft = readDraft();
+      if (draft) {
+        if (!prefill || prefill === draft.data.service) {
+          setData(draft.data);
+          setStep(draft.step);
+          setRestored(true);
+        } else {
+          // User arrived from a different service page — keep their draft
+          // details but re-anchor to the newly selected service, step 1.
+          setData({ ...draft.data, service: prefill });
+          setStep(0);
+          setRestored(true);
+        }
+      }
+      setHydrated(true);
+    }, 0);
+    return () => clearTimeout(t);
+  }, []);
 
   useEffect(() => {
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, []);
+
+  /* Persist the draft (skipped until restore has run). */
+  useEffect(() => {
+    if (!hydrated || submitted) return;
+    try {
+      window.localStorage.setItem(DRAFT_KEY, JSON.stringify({ data, step }));
+    } catch {
+      /* private browsing / quota — persistence is a nicety, not a requirement */
+    }
+  }, [hydrated, submitted, data, step]);
+
+  const clearDraft = () => {
+    try {
+      window.localStorage.removeItem(DRAFT_KEY);
+    } catch {
+      /* ignore */
+    }
+  };
 
   const set = <K extends keyof EstimateData>(key: K, value: EstimateData[K]) => {
     setData((d) => ({ ...d, [key]: value }));
@@ -202,15 +274,18 @@ export function EstimateForm({ compact = false }: { compact?: boolean }) {
     timerRef.current = setTimeout(() => {
       setSubmitting(false);
       setSubmitted(true);
+      clearDraft();
       topRef.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
     }, reduce ? 100 : 1100);
   };
 
   const reset = () => {
+    clearDraft();
     setData(EMPTY);
     setErrors({});
     setSubmitted(false);
     setStep(0);
+    setRestored(false);
   };
 
   const progress = useMemo(() => ((step + 1) / 5) * 100, [step]);
@@ -325,6 +400,24 @@ export function EstimateForm({ compact = false }: { compact?: boolean }) {
 
       {/* Body */}
       <div className="rounded-b-3xl border border-t-0 border-border bg-card p-6 shadow-lg sm:p-8">
+        {restored && (
+          <div
+            role="status"
+            className="mb-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl border border-sage bg-sage/20 px-4 py-2.5"
+          >
+            <p className="text-xs font-semibold text-foreground/80">
+              We restored your saved progress from this browser. Nothing has
+              been sent or stored anywhere else.
+            </p>
+            <button
+              type="button"
+              onClick={reset}
+              className="shrink-0 rounded-full px-3 py-1 text-xs font-bold text-forest underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-forest"
+            >
+              Start over
+            </button>
+          </div>
+        )}
         {step === 0 && (
           <fieldset>
             <legend className="font-serif text-2xl font-semibold text-forest">
