@@ -58,23 +58,23 @@ export const siteConfig = {
   /* ── KEY SITE IMAGES ─────────────────────────────────────────────────── */
   images: {
     hero: {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/62cd9a05b1a8.jpg",
+      src: "/images/62cd9a05b1a8.jpg",
       alt: "Modern backyard at dusk with a stone paver patio, landscape lighting, planted garden beds, and warm glowing windows",
     },
     introMain: {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/ecf7364469e1.png",
+      src: "/images/ecf7364469e1.png",
       alt: "Residential front yard with a manicured lawn, stone walkway, and layered flower beds with mulch",
     },
     introDetail: {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/2cd2180b3346.jpg",
+      src: "/images/2cd2180b3346.jpg",
       alt: "Formal garden with a stone fountain, clipped hedges, and a gravel path in morning light",
     },
     cta: {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/97c4a90223c4.jpg",
+      src: "/images/97c4a90223c4.jpg",
       alt: "Backyard paver patio with a stone fire pit, Adirondack chairs, and a warmly lit house at dusk",
     },
     about: {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/6016984d529a.jpg",
+      src: "/images/6016984d529a.jpg",
       alt: "Landscaper trimming perennials beside a stone retaining wall on a residential street",
     },
   },
@@ -97,7 +97,7 @@ export const siteConfig = {
       short:
         "Complete outdoor transformations — from the first sketch to the final planting.",
       cardImage:
-        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/2923e95a381a.png",
+        "/images/2923e95a381a.png",
       cardAlt:
         "Backyard with a covered dining pavilion, stone steps, water feature, and layered landscape lighting at dusk (design inspiration)",
       intro:
@@ -142,7 +142,7 @@ export const siteConfig = {
       short:
         "Scheduled mowing, edging, and seasonal care that keeps lawns healthy and neat.",
       cardImage:
-        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/15ab73c3f13b.jpg",
+        "/images/15ab73c3f13b.jpg",
       cardAlt:
         "Landscaping crew member pushing a commercial mower across a green lawn beside a commercial building",
       intro:
@@ -187,7 +187,7 @@ export const siteConfig = {
       short:
         "Spring resets, fall leaf removal, and everything needed to hand your yard to the next season.",
       cardImage:
-        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/80f36dd6e913.jpg",
+        "/images/80f36dd6e913.jpg",
       cardAlt:
         "Person raking golden autumn leaves into a pile on a sunlit lawn",
       intro:
@@ -232,7 +232,7 @@ export const siteConfig = {
       short:
         "Stone patios, walkways, and hardscaping built for everyday enjoyment.",
       cardImage:
-        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/99127fcef9a9.jpg",
+        "/images/99127fcef9a9.jpg",
       cardAlt:
         "Modern backyard patio with a black pergola, outdoor dining table, and patterned pavers beside a green lawn (design inspiration)",
       intro:
@@ -277,7 +277,7 @@ export const siteConfig = {
       short:
         "Perennial beds, seasonal color, and plantings suited to New York seasons.",
       cardImage:
-        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/026aec6036a5.jpg",
+        "/images/026aec6036a5.jpg",
       cardAlt:
         "Cottage-style garden with a brick path, flowering perennials, and planters beside a shed (design inspiration)",
       intro:
@@ -322,7 +322,7 @@ export const siteConfig = {
       short:
         "Pruning, shaping, and seasonal health care for the plants that frame your property.",
       cardImage:
-        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/61a35bf0202a.jpg",
+        "/images/61a35bf0202a.jpg",
       cardAlt:
         "Close-up of professional loppers pruning a tree branch against a blue sky",
       intro:
@@ -367,7 +367,7 @@ export const siteConfig = {
       short:
         "Efficient watering systems, repairs, and seasonal start-ups and shut-downs.",
       cardImage:
-        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/759f8a54366c.jpg",
+        "/images/759f8a54366c.jpg",
       cardAlt:
         "Lawn sprinkler head spraying water over a bright green lawn",
       intro:
@@ -412,7 +412,7 @@ export const siteConfig = {
       short:
         "Path lights, uplighting, and ambient glow that extends your evenings.",
       cardImage:
-        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/c5fe3029701e.jpg",
+        "/images/c5fe3029701e.jpg",
       cardAlt:
         "Front yard of a home at dusk with illuminated garden beds and low-voltage step lighting along the walkway",
       intro:
@@ -457,7 +457,7 @@ export const siteConfig = {
       short:
         "Reliable grounds care for offices, retail, restaurants, and communities.",
       cardImage:
-        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/873d3f62acad.jpg",
+        "/images/873d3f62acad.jpg",
       cardAlt:
         "Modern office building entrance with landscaped planters, young trees, and stone walkways at dusk (design inspiration)",
       intro:
@@ -502,7 +502,7 @@ export const siteConfig = {
       short:
         "Seasonal snow clearing and ice control for homes and commercial properties.",
       cardImage:
-        "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/f15060a3bef7.jpg",
+        "/images/f15060a3bef7.jpg",
       cardAlt:
         "Two workers in high-visibility jackets shoveling snow from a residential driveway in winter",
       intro:
@@ -545,67 +545,67 @@ export const siteConfig = {
   /* ── GALLERY (13) ────────────────────────────────────────────────────── */
   gallery: [
     {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/0edd372d6b65.jpg",
+      src: "/images/0edd372d6b65.jpg",
       alt: "Sweeping estate lawn bordered by mature trees and manicured garden beds",
       category: "Backyards",
     },
     {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/2d9d8b62f613.jpg",
+      src: "/images/2d9d8b62f613.jpg",
       alt: "Intimate backyard dining table styled with candles and string lights under a brick arch (design inspiration)",
       category: "Backyards",
     },
     {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/d9684f849771.jpg",
+      src: "/images/d9684f849771.jpg",
       alt: "Residential garden bed with boulder accents, dark mulch, and young plantings beside a home (example project concept)",
       category: "Backyards",
     },
     {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/a7952776af3b.jpg",
+      src: "/images/a7952776af3b.jpg",
       alt: "Curving bluestone walkway crossing a gravel garden toward a stone house entrance (design inspiration)",
       category: "Patios",
     },
     {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/15bfd486be3e.jpg",
+      src: "/images/15bfd486be3e.jpg",
       alt: "Natural flagstone path winding through shrubs and lawn toward the coast (design inspiration)",
       category: "Patios",
     },
     {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/4d40c11dd195.jpg",
+      src: "/images/4d40c11dd195.jpg",
       alt: "Vibrant annual flower bed with layered reds, pinks, and ornamental grasses (design inspiration)",
       category: "Gardens",
     },
     {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/4bfabf251d6f.jpg",
+      src: "/images/4bfabf251d6f.jpg",
       alt: "Northeast colonial home with a colorful perennial border along the front path (design inspiration)",
       category: "Gardens",
     },
     {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/deff4ff90a60.jpg",
+      src: "/images/deff4ff90a60.jpg",
       alt: "Mixed flower border in pink, white, and yellow against an old brick garden wall (design inspiration)",
       category: "Gardens",
     },
     {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/d5f855638eee.jpg",
+      src: "/images/d5f855638eee.jpg",
       alt: "City streetscape with young street trees, planters, and benches outside a glass office building (example project concept)",
       category: "Commercial",
     },
     {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/9e80eceb181d.jpg",
+      src: "/images/9e80eceb181d.jpg",
       alt: "Community courtyard with a brick fountain, trimmed hedges, and shade trees between buildings (example project concept)",
       category: "Commercial",
     },
     {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/467581506ba1.png",
+      src: "/images/467581506ba1.png",
       alt: "Timber-framed pergola outdoor dining room with warm uplighting on stone walls at night (design inspiration)",
       category: "Lighting",
     },
     {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/6854485710c0.jpeg",
+      src: "/images/6854485710c0.jpeg",
       alt: "Garden path illuminated by low-voltage path lights leading to a lit home at night (design inspiration)",
       category: "Lighting",
     },
     {
-      src: "https://z-cdn.chatglm.cn/image-search-mcp/images-ppt/e6811f55194b.jpg",
+      src: "/images/e6811f55194b.jpg",
       alt: "Backyard pavilion with warm string lights over a seated patio at dusk (design inspiration)",
       category: "Lighting",
     },
